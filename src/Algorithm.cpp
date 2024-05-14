@@ -1,17 +1,17 @@
 #include "Algorithm.hpp"
 
 Algorithm &Algorithm::setSearchRangeT(std::pair<float, float> range) {
-    rangeT = range;
+    ranges.t = range;
     return *this;
 }
 
 Algorithm &Algorithm::setSearchRangeK(std::pair<float, float> range) {
-    rangeK = range;
+    ranges.k = range;
     return *this;
 }
 
 Algorithm &Algorithm::setSearchRangeDzeta(std::pair<float, float> range) {
-    rangeDzeta = range;
+    ranges.dzeta = range;
     return *this;
 }
 

@@ -4,16 +4,11 @@
 #include <cmath>
 #include <vector>
 
-struct Point {
-    float x;
-    float y;
-};
-
 class Characteristic {
 private:
-    const float TIME_STEP { 0.1f };
-    const float THRESHOLD_VALUE { 0.0001f };
-    const int MAX_THRESHOLD_ITERATIONS { 10 };
+    static constexpr float TIME_STEP { 0.1f };
+    static constexpr float THRESHOLD_VALUE { 0.0001f };
+    static constexpr int MAX_THRESHOLD_ITERATIONS { 10 };
 
     float t { 1.0f };
     float k { 1.0f };
@@ -23,6 +18,11 @@ private:
     float impulseResponse(float time);
 
 public:
+    struct Point {
+        float x;
+        float y;
+    };
+
     using CharacteristicFunction = enum { JUMP_FUNCTION, IMPULSE_FUNCTION };
 
     Characteristic& setT(float factor);

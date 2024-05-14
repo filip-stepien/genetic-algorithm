@@ -4,10 +4,20 @@
 #include <utility>
 
 class Algorithm {
+public:
+    constexpr static int RANGES_SIZE = 3;
+
+    union Ranges {
+        struct {
+            std::pair<float, float> k { 0.1f, 10.0f };;
+            std::pair<float, float> t { 0.1f, 10.0f };
+            std::pair<float, float> dzeta { 0.01f, 0.99f };
+        };
+        std::pair<float, float> all[RANGES_SIZE];
+    };
+
 private:
-    std::pair<float, float> rangeT { 0.1f, 10.0f };
-    std::pair<float, float> rangeK { 0.1f, 10.0f };
-    std::pair<float, float> rangeDzeta { 0.01f, 0.99f };
+    Ranges ranges;
     float mutationProbability { 0.5f };
     float crossoverProbablity { 0.5f };
     int numOfIterations { 30 };
