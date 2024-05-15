@@ -4,12 +4,7 @@
 #include <random>
 
 class Random {
-private:
-    static std::random_device rd;
-    static std::mt19937 generator;
-
 public:
-    static void start();
     static int randomInt(int min, int max);         // [min, max]
     static float randomFloat(float min, float max); // [min, max)
     static bool randomChance(float chance);

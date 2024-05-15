@@ -4,6 +4,13 @@
 #include <cmath>
 #include <vector>
 
+struct Point {
+    float x;
+    float y;
+};
+
+using CharacteristicFunction = enum CharacteristicFunction { JUMP_FUNCTION, IMPULSE_FUNCTION };
+
 class Characteristic {
 private:
     static constexpr float TIME_STEP { 0.1f };
@@ -18,13 +25,6 @@ private:
     float impulseResponse(float time);
 
 public:
-    struct Point {
-        float x;
-        float y;
-    };
-
-    using CharacteristicFunction = enum { JUMP_FUNCTION, IMPULSE_FUNCTION };
-
     Characteristic& setT(float factor);
     Characteristic& setK(float factor);
     Characteristic& setDzeta(float factor);

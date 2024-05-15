@@ -3,7 +3,7 @@
 
 #include "Characteristic.hpp"
 #include "Random.hpp"
-#include "Algorithm.hpp"
+#include "SearchRanges.hpp"
 #include <optional>
 #include <utility>
 
@@ -26,16 +26,19 @@ public:
     Individual& setT(float factor);
     Individual& setK(float factor);
     Individual& setDzeta(float factor);
-    Individual& mutate(float chance, Algorithm::Ranges ranges);
+    Individual& mutate(float chance, SearchRanges ranges);
     std::optional<Individual> getOffspring(Individual& targetParent, float chance);
     Individual& calculateFitness(
-        std::vector<Characteristic::Point>& initialJump,
-        std::vector<Characteristic::Point>& initalImpulse
+        std::vector<Point>& initialJump,
+        std::vector<Point>& initalImpulse
     );
 
     float getT() const;
     float getK() const;
     float getDzeta() const;
+    float getFitness() const;
+
+    bool operator<(const Individual& individual) const;
 };
 
 #endif //GENETIC_ALGORITHM_INDIVIDUAL_HPP

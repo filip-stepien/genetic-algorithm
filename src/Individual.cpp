@@ -1,4 +1,5 @@
 #include "Individual.hpp"
+#include "Algorithm.hpp"
 
 Individual& Individual::setT(float factor) {
     genetic.k = factor;
@@ -27,23 +28,28 @@ float Individual::getDzeta() const {
     return genetic.dzeta;
 }
 
-Individual& Individual::calculateFitness(
-        std::vector<Characteristic::Point>& initialJump,
-        std::vector<Characteristic::Point>& initalImpulse
-) {
+float Individual::getFitness() const {
+    return fitness;
+}
+
+bool Individual::operator<(const Individual &individual) const {
+    return this->fitness < individual.fitness;
+}
+
+Individual& Individual::calculateFitness(std::vector<Point>& initialJump, std::vector<Point>& initalImpulse) {
     Characteristic jump;
-    std::vector<Characteristic::Point> currentJump = jump
+    std::vector<Point> currentJump = jump
         .setK(genetic.k)
         .setT(genetic.k)
         .setDzeta(genetic.dzeta)
-        .generateCharacteristic(Characteristic::JUMP_FUNCTION);
+        .generateCharacteristic(JUMP_FUNCTION);
 
     Characteristic impulse;
-    std::vector<Characteristic::Point> currentImpulse = impulse
+    std::vector<Point> currentImpulse = impulse
         .setK(genetic.k)
         .setT(genetic.t)
         .setDzeta(genetic.dzeta)
-        .generateCharacteristic(Characteristic::IMPULSE_FUNCTION);
+        .generateCharacteristic(IMPULSE_FUNCTION);
 
     float jumpDt, impulseDt;
     for (int i = 0; i < currentJump.size(); i++) {
@@ -55,14 +61,14 @@ Individual& Individual::calculateFitness(
     return *this;
 }
 
-Individual &Individual::mutate(float chance, Algorithm::Ranges ranges) {
+Individual &Individual::mutate(float chance, SearchRanges ranges) {
     if (!Random::randomChance(chance))
         return *this;
 
     int trait = Random::randomInt(0, CHROMOSOME_SIZE - 1);
     genetic.chromosome[trait] = Random::randomFloat(
-        ranges.all[trait].first,
-        ranges.all[trait].second
+        ranges.all[trait].min,
+        ranges.all[trait].max
     );
 
     return *this;
