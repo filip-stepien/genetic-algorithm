@@ -20,6 +20,7 @@ private:
 
     void generateRandomPopulation();
     void calculatePopulationFitness();
+    void calculatePopulationParenthood();
     void performSelection();
     void performCrossover();
     void performMutation();
@@ -35,6 +36,8 @@ public:
     Algorithm& setJumpCharacteristic(Characteristic& characteristic);
     Algorithm& setImpulseCharacteristic(Characteristic& characteristic);
     Individual getResult();
+
+    void printPopulation();
 };
 
 

@@ -16,6 +16,11 @@ Individual& Individual::setDzeta(float factor) {
     return *this;
 }
 
+Individual& Individual::setParenthoodProbability(float probability) {
+    parenthoodProbability = probability;
+    return *this;
+} 
+
 float Individual::getT() const {
     return genetic.t;
 }
@@ -30,6 +35,10 @@ float Individual::getDzeta() const {
 
 float Individual::getFitness() const {
     return fitness;
+}
+
+void Individual::print() {
+    std::printf("T: %d\tK: %d\tDZETA: %d\tJ: %d\n", getT(), getK(), getDzeta(), getFitness());
 }
 
 bool Individual::operator<(const Individual &individual) const {
