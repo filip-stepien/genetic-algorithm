@@ -22,12 +22,14 @@ private:
 
     float fitness { 0 };
     float parenthoodProbability { 0 };
+    bool mated { false };
 
 public:
     Individual& setT(float factor);
     Individual& setK(float factor);
     Individual& setDzeta(float factor);
     Individual& setParenthoodProbability(float probability);
+    Individual& setMated(bool didMate);
     Individual& mutate(float chance, SearchRanges ranges);
     std::optional<Individual> getOffspring(Individual& targetParent, float chance);
     Individual& calculateFitness(
@@ -39,8 +41,10 @@ public:
     float getK() const;
     float getDzeta() const;
     float getFitness() const;
+    float getParenthoodProbability() const;
+    bool didMate() const;
     
-    void print();
+    void print() const;
 
     bool operator<(const Individual& individual) const;
 };

@@ -12,9 +12,9 @@ struct Range {
 
 union SearchRanges {
     struct {
-        Range t;
-        Range k;
-        Range dzeta;
+        Range t { 0.1f, 1.0f };
+        Range k { 0.1f, 1.0f };
+        Range dzeta { 0.01f, 0.99f };
     };
     Range all[RANGES_SIZE];
 };
