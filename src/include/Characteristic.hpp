@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <vector>
+#include <iostream>
 
 struct Point {
     float x;
@@ -14,12 +15,11 @@ using CharacteristicFunction = enum CharacteristicFunction { JUMP_FUNCTION, IMPU
 class Characteristic {
 private:
     static constexpr float TIME_STEP { 0.1f };
-    static constexpr float THRESHOLD_VALUE { 0.0001f };
-    static constexpr int MAX_THRESHOLD_ITERATIONS { 10 };
+    static constexpr float MAX_TIME { 30.0f };
 
     float t { 1.0f };
     float k { 1.0f };
-    float dzeta { 0.5f };
+    float dzeta { 0.1f };
 
     float jumpResponse(float time);
     float impulseResponse(float time);
@@ -30,7 +30,7 @@ public:
     Characteristic& setDzeta(float factor);
 
     std::vector<Point> generateCharacteristic(CharacteristicFunction function);
+    static void print(std::vector<Point> points);
 };
-
 
 #endif //GENETIC_ALGORITHM_CHARACTERISTIC_HPP

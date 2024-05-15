@@ -1,6 +1,7 @@
 #ifndef GENETIC_ALGORITHM_ALGORITHM_HPP
 #define GENETIC_ALGORITHM_ALGORITHM_HPP
 
+#include <iostream>
 #include <algorithm>
 #include "SearchRanges.hpp"
 #include "Individual.hpp"
@@ -12,18 +13,19 @@ private:
     SearchRanges ranges;
     float mutationProbability { 0.5f };
     float crossoverProbablity { 0.5f };
-    int numOfIterations { 30 };
+    int numOfIterations { 50 };
     int populationSize { 100 };
 
     std::vector<Individual> population;
     float totalFitness { 0 };
 
+    void sortPopulation(std::vector<Individual>& populationToSort);
     void generateRandomPopulation();
     void calculatePopulationFitness();
     void calculatePopulationParenthood();
-    void performSelection();
-    void performCrossover();
-    void performMutation();
+    void advancePopulation();
+    void makeNextGeneration(std::vector<Individual>& newPopulation);
+    void mutatePopulation();
 
 public:
     Algorithm& setSearchRangeT(Range range);
@@ -36,7 +38,6 @@ public:
     Algorithm& setJumpCharacteristic(Characteristic& characteristic);
     Algorithm& setImpulseCharacteristic(Characteristic& characteristic);
     Individual getResult();
-
     void printPopulation();
 };
 

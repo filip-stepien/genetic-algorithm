@@ -6,12 +6,12 @@ Characteristic &Characteristic::setT(float factor) {
 }
 
 Characteristic &Characteristic::setK(float factor) {
-    t = factor;
+    k = factor;
     return *this;
 }
 
 Characteristic &Characteristic::setDzeta(float factor) {
-    t = factor;
+    dzeta = factor;
     return *this;
 }
 
@@ -31,17 +31,18 @@ float Characteristic::impulseResponse(float time) {
 
 std::vector<Point> Characteristic::generateCharacteristic(CharacteristicFunction function) {
     std::vector<Point> result;
-    int thresholdIterations = 0;
+    float funcValue;
 
-    for (float time = 0.0f; thresholdIterations <= MAX_THRESHOLD_ITERATIONS; time += TIME_STEP) {
-        float funcValue = function == JUMP_FUNCTION ? jumpResponse(time) : impulseResponse(time);
-        float lastValue = result.empty() ? 0 : result.back().y;
-
-        if (std::abs(lastValue - funcValue) <= THRESHOLD_VALUE)
-            thresholdIterations++;
-
+    for (float time = 0.0f; time <= MAX_TIME; time += TIME_STEP) {
+        funcValue = function == JUMP_FUNCTION ? jumpResponse(time) : impulseResponse(time);
         result.push_back({ time, funcValue });
     }
 
     return result;
+}
+
+void Characteristic::print(std::vector<Point> points) {
+    for (auto& p : points) {
+        std::cout << p.x << "," << p.y << std::endl;
+    }
 }

@@ -19,7 +19,12 @@ Individual& Individual::setDzeta(float factor) {
 Individual& Individual::setParenthoodProbability(float probability) {
     parenthoodProbability = probability;
     return *this;
-} 
+}
+
+Individual& Individual::setMated(bool didMate) {
+    mated = didMate;
+    return *this;
+}
 
 float Individual::getT() const {
     return genetic.t;
@@ -37,19 +42,33 @@ float Individual::getFitness() const {
     return fitness;
 }
 
-void Individual::print() {
-    std::printf("T: %d\tK: %d\tDZETA: %d\tJ: %d\n", getT(), getK(), getDzeta(), getFitness());
+float Individual::getParenthoodProbability() const {
+    return parenthoodProbability;
+}
+
+bool Individual::didMate() const {
+    return mated;
+}
+
+void Individual::print() const {
+    std::printf(
+        "T: %f\tK: %f\tDZETA: %f\tJ: %f\n",
+        getT(),
+        getK(),
+        getDzeta(),
+        getFitness()
+    );
 }
 
 bool Individual::operator<(const Individual &individual) const {
     return this->fitness < individual.fitness;
 }
 
-Individual& Individual::calculateFitness(std::vector<Point>& initialJump, std::vector<Point>& initalImpulse) {
+Individual& Individual::calculateFitness(std::vector<Point>& initialJump, std::vector<Point>& initialImpulse) {
     Characteristic jump;
     std::vector<Point> currentJump = jump
         .setK(genetic.k)
-        .setT(genetic.k)
+        .setT(genetic.t)
         .setDzeta(genetic.dzeta)
         .generateCharacteristic(JUMP_FUNCTION);
 
@@ -60,10 +79,12 @@ Individual& Individual::calculateFitness(std::vector<Point>& initialJump, std::v
         .setDzeta(genetic.dzeta)
         .generateCharacteristic(IMPULSE_FUNCTION);
 
+    fitness = 0;
+
     float jumpDt, impulseDt;
-    for (int i = 0; i < currentJump.size(); i++) {
+    for (int i = 0; i < initialJump.size(); i++) {
         jumpDt = initialJump[i].y - currentJump[i].y;
-        impulseDt = initalImpulse[i].y - currentImpulse[i].y;
+        impulseDt = initialImpulse[i].y - currentImpulse[i].y;
         fitness += (jumpDt * jumpDt) + (impulseDt * impulseDt);
     }
 

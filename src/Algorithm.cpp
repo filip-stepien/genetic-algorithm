@@ -45,6 +45,16 @@ Algorithm &Algorithm::setImpulseCharacteristic(Characteristic& characteristic) {
     return *this;
 }
 
+void Algorithm::printPopulation() {
+    for (auto& individual : population) {
+        individual.print();
+    }
+}
+
+void Algorithm::sortPopulation(std::vector<Individual>& populationToSort) {
+    std::sort(populationToSort.begin(), populationToSort.end());
+}
+
 void Algorithm::generateRandomPopulation() {
     Individual individual;
     float randT, randK, randDzeta;
@@ -73,29 +83,98 @@ void Algorithm::calculatePopulationFitness() {
 }
 
 void Algorithm::calculatePopulationParenthood() {
-    float probability, previousProbability = 0.0f;
+    float probability, previousProbability = 1.0f;
 
-    for (auto& i : population) {
-        probability = previousProbability + (i.getFitness() / totalFitness);
-        individual.setParenthoodProbability(1 - probability);
+    sortPopulation(population);
+
+    for (auto& individual : population) {
+        probability = previousProbability - (individual.getFitness() / totalFitness);
         previousProbability = probability;
+
+        individual.setParenthoodProbability(probability);
+    }
+}
+
+void Algorithm::makeNextGeneration(std::vector<Individual>& newPopulation) {
+    sortPopulation(newPopulation);
+
+    if (newPopulation.size() < populationSize) {
+        for (int i = newPopulation.size(); i < populationSize; i++) {
+            newPopulation.push_back(population[i]);
+        }
+    } else if (newPopulation.size() > populationSize) {
+        while (newPopulation.size() != populationSize) {
+            newPopulation.pop_back();
+        }
+    }
+
+    population = { newPopulation };
+}
+
+void Algorithm::advancePopulation() {
+    std::vector<Individual> newPopulation;
+    Individual father, mother;
+    std::optional<Individual> offspring;
+    int randIndex;
+
+    for (auto& individual : population) {
+        individual.setMated(false);
+
+        if (!Random::randomChance(individual.getParenthoodProbability()))
+            continue;
+
+        newPopulation.push_back(individual);
+    }
+
+    for (int i = 0; i < newPopulation.size(); i++) {
+        father = newPopulation[i];
+
+        if (father.didMate())
+            continue;
+
+        do {
+            randIndex = Random::randomInt(i, newPopulation.size() - 1);
+            mother = newPopulation[randIndex];
+
+            if (!mother.didMate())
+                mother.setMated(true);
+
+        } while (!mother.didMate());
+
+        offspring = father.getOffspring(mother, crossoverProbablity);
+
+        if (offspring) {
+            offspring->setMated(true);
+            newPopulation.push_back(*offspring);
+        }
+    }
+
+    makeNextGeneration(newPopulation);
+}
+
+void Algorithm::mutatePopulation() {
+    for (auto& individual : population) {
+        individual.mutate(mutationProbability, ranges);
     }
 }
 
 Individual Algorithm::getResult() {
-    generateRandomPopulation();
+    if (jumpCharacteristicValues.empty() || impulseCharacteristicValues.empty()) {
+        std::cout << "Characteristics are not defined!" << std::endl;
+        return {};
+    }
 
-    //for (int i = 0; i < numOfIterations; i++) {
+    generateRandomPopulation();
+    for (int i = 0; i < numOfIterations; i++) {
+        mutatePopulation();
         calculatePopulationFitness();
         calculatePopulationParenthood();
-    //}
-
-    return Individual();
-}
-
-void Individual::printPopulation() {
-    for (auto& individual : population) {
-        individual.print();
+        advancePopulation();
     }
+
+    calculatePopulationFitness();
+    sortPopulation(population);
+
+    return population.front();
 }
 
