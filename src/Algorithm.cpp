@@ -72,11 +72,30 @@ void Algorithm::calculatePopulationFitness() {
     }
 }
 
+void Algorithm::calculatePopulationParenthood() {
+    float probability, previousProbability = 0.0f;
+
+    for (auto& i : population) {
+        probability = previousProbability + (i.getFitness() / totalFitness);
+        individual.setParenthoodProbability(1 - probability);
+        previousProbability = probability;
+    }
+}
+
 Individual Algorithm::getResult() {
     generateRandomPopulation();
 
-    for (int i = 0; i < numOfIterations; i++) {
+    //for (int i = 0; i < numOfIterations; i++) {
         calculatePopulationFitness();
+        calculatePopulationParenthood();
+    //}
+
+    return Individual();
+}
+
+void Individual::printPopulation() {
+    for (auto& individual : population) {
+        individual.print();
     }
 }
 

@@ -6,5 +6,9 @@
 int main() {
     Algorithm algorithm;
 
+    algorithm.getResult();
+
+    algorithm.printPopulation();
+
     return 0;
 }
