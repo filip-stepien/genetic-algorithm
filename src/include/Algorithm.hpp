@@ -6,16 +6,32 @@
 #include "Ranges.hpp"
 #include "Individual.hpp"
 #include "progressbar.hpp"
+#include "Params.hpp"
 
 class Algorithm {
 private:
     std::vector<Point> jumpCharacteristicValues;
     std::vector<Point> impulseCharacteristicValues;
-    Ranges ranges;
-    float mutationProbability { 0.1f };
-    float crossoverProbablity { 0.5f };
-    int numOfIterations { 50 };
-    int populationSize { 100 };
+
+    float mutationProbability { DEFAULT_PARAMS[MUTATION] };
+    float crossoverProbability { DEFAULT_PARAMS[CROSSOVER] };
+    int numOfIterations { static_cast<int>(DEFAULT_PARAMS[ITERATIONS]) };
+    int populationSize { static_cast<int>(DEFAULT_PARAMS[POPULATION]) };
+
+    Ranges ranges {
+        .t = {
+            DEFAULT_PARAMS[RANGE_KT_MIN],
+            DEFAULT_PARAMS[RANGE_KT_MAX]
+        },
+        .k = {
+            DEFAULT_PARAMS[RANGE_KT_MIN],
+            DEFAULT_PARAMS[RANGE_KT_MAX]
+        },
+        .dzeta = {
+            DEFAULT_PARAMS[RANGE_DZETA_MIN],
+            DEFAULT_PARAMS[RANGE_DZETA_MAX]
+        }
+    };
 
     std::vector<Individual> population;
     float totalFitness { 0 };

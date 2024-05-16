@@ -25,7 +25,7 @@ Algorithm &Algorithm::setMutationProbability(float probability) {
 }
 
 Algorithm &Algorithm::setCrossoverProbability(float probability) {
-    crossoverProbablity = probability;
+    crossoverProbability = probability;
     return *this;
 }
 
@@ -145,7 +145,7 @@ void Algorithm::advancePopulation() {
 
         } while (!mother.didMate());
 
-        offspring = father.getOffspring(mother, crossoverProbablity);
+        offspring = father.getOffspring(mother, crossoverProbability);
 
         if (offspring) {
             offspring->setMated(true);

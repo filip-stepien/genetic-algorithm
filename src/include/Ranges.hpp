@@ -15,9 +15,9 @@ struct Range {
 
 union Ranges {
     struct {
-        Range t { 0.1f, 10.0f };
-        Range k { 0.1f, 10.0f };
-        Range dzeta { 0.01f, 1.0f };
+        Range t;
+        Range k;
+        Range dzeta;
     };
     Range all[RANGES_SIZE];
 };
