@@ -51,13 +51,11 @@ bool Individual::didMate() const {
 }
 
 void Individual::print() const {
-    std::printf(
-        "T: %f\tK: %f\tDZETA: %f\tJ: %f\n",
-        getT(),
-        getK(),
-        getDzeta(),
-        getFitness()
-    );
+    VariadicTable<float, float, float, float> table({ "K", "T", "DZETA", "J" }, 10);
+    table.addRow(getK(), getT(), getDzeta(), getFitness());
+
+    std::cout << "\n\n";
+    table.print(std::cout);
 }
 
 bool Individual::operator<(const Individual &individual) const {
@@ -91,7 +89,7 @@ Individual& Individual::calculateFitness(std::vector<Point>& initialJump, std::v
     return *this;
 }
 
-Individual &Individual::mutate(float chance, SearchRanges ranges) {
+Individual &Individual::mutate(float chance, Ranges ranges) {
     if (!Random::randomChance(chance))
         return *this;
 

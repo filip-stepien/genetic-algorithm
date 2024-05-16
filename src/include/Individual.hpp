@@ -3,7 +3,8 @@
 
 #include "Characteristic.hpp"
 #include "Random.hpp"
-#include "SearchRanges.hpp"
+#include "Ranges.hpp"
+#include "VariadicTable.h"
 #include <optional>
 #include <utility>
 
@@ -30,7 +31,7 @@ public:
     Individual& setDzeta(float factor);
     Individual& setParenthoodProbability(float probability);
     Individual& setMated(bool didMate);
-    Individual& mutate(float chance, SearchRanges ranges);
+    Individual& mutate(float chance, Ranges ranges);
     std::optional<Individual> getOffspring(Individual& targetParent, float chance);
     Individual& calculateFitness(
         std::vector<Point>& initialJump,

@@ -1,5 +1,9 @@
 #include "Algorithm.hpp"
 
+Algorithm::~Algorithm() {
+    delete bar;
+}
+
 Algorithm &Algorithm::setSearchRangeT(Range range) {
     ranges.t = range;
     return *this;
@@ -158,18 +162,27 @@ void Algorithm::mutatePopulation() {
     }
 }
 
+void Algorithm::createProgressBar() {
+    bar = new progressbar(numOfIterations);
+}
+
+void Algorithm::updateProgressBar(int iteration) {
+    bar->update();
+}
+
 Individual Algorithm::getResult() {
     if (jumpCharacteristicValues.empty() || impulseCharacteristicValues.empty()) {
         std::cout << "Characteristics are not defined!" << std::endl;
-        return {};
     }
 
+    createProgressBar();
     generateRandomPopulation();
-    for (int i = 0; i < numOfIterations; i++) {
+    for (int i = 1; i <= numOfIterations; i++) {
         mutatePopulation();
         calculatePopulationFitness();
         calculatePopulationParenthood();
         advancePopulation();
+        updateProgressBar(i);
     }
 
     calculatePopulationFitness();
