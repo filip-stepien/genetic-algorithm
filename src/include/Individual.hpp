@@ -14,12 +14,12 @@ private:
 
     union Genetic {
         struct {
-            float k { 0 };
-            float t { 0 };
-            float dzeta { 0 };
+            float k;
+            float t;
+            float dzeta;
         };
         float chromosome[CHROMOSOME_SIZE];
-    } genetic;
+    } genetic { 0 };
 
     float fitness { 0 };
     float parenthoodProbability { 0 };
