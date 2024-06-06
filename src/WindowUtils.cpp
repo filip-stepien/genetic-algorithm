@@ -1,4 +1,4 @@
-#include "WindowUtils.hpp"
+ #include "WindowUtils.hpp"
 
 void WindowUtils::getInput(float params[PARAMS_SIZE]) {
     for (int i = 0; i < PARAMS_SIZE; i++) {
@@ -18,7 +18,8 @@ void WindowUtils::getInput(float params[PARAMS_SIZE]) {
                    temp >= min && temp <= max
                    : temp > min && temp < max;
 
-            if ((i == RANGE_KT_MAX && temp < params[RANGE_KT_MIN]) ||
+            if ((i == RANGE_K_MAX && temp < params[RANGE_K_MIN]) ||
+                (i == RANGE_T_MAX && temp < params[RANGE_T_MIN]) ||
                 (i == RANGE_DZETA_MAX && temp < params[RANGE_DZETA_MIN]))
                 done = false;
 
@@ -56,11 +57,11 @@ void WindowUtils::getConfirmation(const std::string& text, bool ignore) {
 
 void WindowUtils::printTitle() {
     std::string title = R"(
- ____                 _   _
-/ ___| ___ _ __   ___| |_(_) ___
+  ____                 _   _
+ / ___| ___ _ __   ___| |_(_) ___
 | |  _ / _ \ '_ \ / _ \ __| |/ __|
 | |_| |  __/ | | |  __/ |_| | (__
-\____|\___|_| |_|\___|\__|_|\___|
+ \____|\___|_| |_|\___|\__|_|\___|
     _    _                  _ _   _
    / \  | | __ _  ___  _ __(_) |_| |__  _ __ ___
   / _ \ | |/ _` |/ _ \| '__| | __| '_ \| '_ ` _ \

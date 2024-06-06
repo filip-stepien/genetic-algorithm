@@ -4,6 +4,7 @@
 #include <cmath>
 #include <vector>
 #include <iostream>
+#include "Params.hpp"
 
 struct Point {
     float x;
@@ -17,9 +18,9 @@ private:
     static constexpr float TIME_STEP { 0.1f };
     static constexpr float MAX_TIME { 30.0f };
 
-    float t { 1.0f };
-    float k { 1.0f };
-    float dzeta { 0.1f };
+    float t { DEFAULT_PARAMS[INIT_T] };
+    float k { DEFAULT_PARAMS[INIT_K] };
+    float dzeta { DEFAULT_PARAMS[INIT_DZETA] };
 
     float jumpResponse(float time);
     float impulseResponse(float time);

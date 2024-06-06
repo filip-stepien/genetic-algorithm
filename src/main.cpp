@@ -28,8 +28,8 @@ int main() {
         .setNumberOfIterations(params[ITERATIONS])
         .setMutationProbability(params[MUTATION])
         .setCrossoverProbability(params[CROSSOVER])
-        .setSearchRangeT({ params[RANGE_KT_MIN], params[RANGE_KT_MAX] })
-        .setSearchRangeK({ params[RANGE_KT_MIN], params[RANGE_KT_MAX] })
+        .setSearchRangeT({ params[RANGE_T_MIN], params[RANGE_T_MAX] })
+        .setSearchRangeK({ params[RANGE_K_MIN], params[RANGE_K_MAX] })
         .setSearchRangeDzeta({ params[RANGE_DZETA_MIN], params[RANGE_DZETA_MAX] })
         .setImpulseCharacteristic(impulseCharacteristic)
         .setJumpCharacteristic(jumpCharacteristic);

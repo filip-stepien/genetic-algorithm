@@ -18,19 +18,14 @@ private:
     int numOfIterations { static_cast<int>(DEFAULT_PARAMS[ITERATIONS]) };
     int populationSize { static_cast<int>(DEFAULT_PARAMS[POPULATION]) };
 
+    Range rangeT = { DEFAULT_PARAMS[RANGE_T_MIN], DEFAULT_PARAMS[RANGE_T_MAX] };
+    Range rangeK = { DEFAULT_PARAMS[RANGE_K_MIN], DEFAULT_PARAMS[RANGE_K_MAX] };
+    Range rangeDzeta = { DEFAULT_PARAMS[RANGE_DZETA_MIN], DEFAULT_PARAMS[RANGE_DZETA_MAX] };
+
     Ranges ranges {
-        .t = {
-            DEFAULT_PARAMS[RANGE_KT_MIN],
-            DEFAULT_PARAMS[RANGE_KT_MAX]
-        },
-        .k = {
-            DEFAULT_PARAMS[RANGE_KT_MIN],
-            DEFAULT_PARAMS[RANGE_KT_MAX]
-        },
-        .dzeta = {
-            DEFAULT_PARAMS[RANGE_DZETA_MIN],
-            DEFAULT_PARAMS[RANGE_DZETA_MAX]
-        }
+        rangeT, 
+        rangeK, 
+        rangeDzeta
     };
 
     std::vector<Individual> population;
